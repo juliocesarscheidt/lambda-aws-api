@@ -1,0 +1,1 @@
+{"errorMessage": "'httpMethod'", "errorType": "KeyError", "stackTrace": [["/var/task/main.py", 36, "handler", "return awsgi.response(app, event, context)"], ["/var/task/awsgi/__init__.py", 172, "response", "output = app(environ(event, context), sr)"], ["/var/task/awsgi/__init__.py", 121, "environ", "'REQUEST_METHOD': event['httpMethod'],"]]}
