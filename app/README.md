@@ -20,5 +20,5 @@ $ pip install -r requirements.txt
 3. Start the development server:
 
 ```bash
-$ APP_SECRET_TOKEN=APP_SECRET_TOKEN python app.py
+$ API_SECRET_TOKEN=API_SECRET_TOKEN python app.py
 ```

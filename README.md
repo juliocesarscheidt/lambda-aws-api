@@ -10,7 +10,7 @@ This little challenge was created in a way to give you maximum freedom so that y
 
 This test is made to know more each candidate to our DevOps Engineer position. This is not an objective test which aims at generating a score, but a study case to learn more about the knowledge, experiences and the way that you work. Feel free to develop your solution for the problem and, if you have any question, don't hesitate in contacting us.
 
-Inside the `app` directory there is a very simple Flask application. Once this app starts it reads an environment variable called `APP_SECRET_TOKEN` that is the API password. Hence, any call to the application needs an `Authorization` header with a specific token. Eg: `curl -H "Authorization: Token SomeSecretToken" http://localhost:8000/`. You should tell us how to define/change this token in an easy way.
+Inside the `app` directory there is a very simple Flask application. Once this app starts it reads an environment variable called `API_SECRET_TOKEN` that is the API password. Hence, any call to the application needs an `Authorization` header with a specific token. Eg: `curl -H "Authorization: Token SomeSecretToken" http://localhost:8000/`. You should tell us how to define/change this token in an easy way.
 
 Your goal is to deploy this application in AWS (Amazon Web Service). Probably, you'll need to create a free-tier AWS account, or use an already created account, but don't worry about it, **we won't look at your account or call the application already running**. We want to be able to recreate all this infrastructure in our account as simply as possible. Be creative.
 

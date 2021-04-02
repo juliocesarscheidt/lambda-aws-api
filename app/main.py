@@ -9,12 +9,12 @@ from flask_httpauth import HTTPTokenAuth
 app = Flask(__name__)
 auth = HTTPTokenAuth('Token')
 
-APP_SECRET_TOKEN = os.getenv('APP_SECRET_TOKEN')
-print(APP_SECRET_TOKEN)
+API_SECRET_TOKEN = os.getenv('API_SECRET_TOKEN')
+print(API_SECRET_TOKEN)
 
 @auth.verify_token
 def verify_token(token):
-  return token == APP_SECRET_TOKEN
+  return token == API_SECRET_TOKEN
 
 @app.route('/', methods=['GET'])
 @auth.login_required
@@ -22,6 +22,14 @@ def index():
   return jsonify(
     status=200,
     message='OK'
+  )
+
+@app.route('/health', methods=['GET'])
+@auth.login_required
+def health():
+  return jsonify(
+    status=200,
+    message='Health'
   )
 
 def handler(event, context):

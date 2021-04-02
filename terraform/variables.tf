@@ -18,11 +18,10 @@ variable "aws_region" {
 variable "aws_az_names" {
   type        = list(string)
   description = "Name of zones to be available"
-  default     = ["sa-east-1a", "sa-east-1c"]
+  default     = ["sa-east-1a", "sa-east-1b", "sa-east-1c"]
 }
 
-
-variable "aws_key_name" {
+variable "api_secret_token" {
   type        = string
-  description = "AWS SSH key name"
+  description = "API secret token"
 }
