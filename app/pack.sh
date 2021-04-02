@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# creates a package folder and install dependencies
 if [ ! -d ./package ]; then
   echo "Package doesn't exist, creating..."
   mkdir -p ./package
@@ -8,16 +9,15 @@ fi
 
 cd ./package
 
-# cria um zip na pasta anterior
+# creates a .zip on the previous folder
 zip -r ../app.zip .
 cd ../
 
-# adiciona o main.py no zip
+# add the main.py file in the .zip
 zip -g app.zip main.py
 
-# permissões para ser lido
+# give permissions to be read by group and others, besides of full permission to owner
 chmod 755 app.zip
 
-# mover para a pasta do terraform
+# moves the .zip to the terraform's folder
 mv ./app.zip ../terraform/
-# cd ../terraform

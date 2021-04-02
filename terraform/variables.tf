@@ -21,7 +21,23 @@ variable "aws_az_names" {
   default     = ["sa-east-1a", "sa-east-1b", "sa-east-1c"]
 }
 
+variable "domain" {
+  type        = string
+  description = "The domain to be used for Cloudfront Distribution"
+}
+
+variable "certificate_arn" {
+  type        = string
+  description = "The ARN of the certificate to be used for Cloudfront Distribution"
+}
+
+variable "api_stage" {
+  type        = string
+  description = "The stage for deployment"
+  default     = "development"
+}
+
 variable "api_secret_token" {
   type        = string
-  description = "API secret token"
+  description = "The API secret token"
 }

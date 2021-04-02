@@ -1,4 +1,4 @@
-# Simple Flask Application
+# Flask API
 
 ## Up and Running
 

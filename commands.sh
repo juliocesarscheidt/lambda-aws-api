@@ -51,31 +51,59 @@ cd ../terraform
 export API_SECRET_TOKEN="$(uuidgen | sed 's/-//g')"
 echo "$API_SECRET_TOKEN"
 
+# fixed example
+export API_SECRET_TOKEN=a80ac2ff00a5468da81693a27e0c4ebf
+# a80ac2ff00a5468da81693a27e0c4ebf
 
+# export for terraform
 export TF_VAR_api_secret_token="$API_SECRET_TOKEN"
+
+export TF_VAR_api_stage="development"
+
 
 terraform fmt -write=true -recursive
 terraform init
 terraform validate
 terraform plan -detailed-exitcode -input=false
 terraform apply -auto-approve
-terraform destroy -auto-approve
+# terraform destroy -auto-approve
 
 
-terraform output base_url
-curl "$(terraform output base_url)"
+
+######## calling using API gateway's invoke URL
+terraform output api_gateway_invoke_url
+curl "$(terraform output api_gateway_invoke_url)"
 # Unauthorized Access
 
-curl --silent -H "Authorization: Token $API_SECRET_TOKEN" drgd8ntbst4bw.cloudfront.net | jq .
+curl --silent -H "Authorization: Token $API_SECRET_TOKEN" "$(terraform output api_gateway_invoke_url)" | jq .
+# index
 # {
 #   "message": "OK",
 #   "status": 200
 # }
 
+curl --silent -H "Authorization: Token $API_SECRET_TOKEN" "$(terraform output api_gateway_invoke_url)/health" | jq .
 # health
-curl --silent -H "Authorization: Token $API_SECRET_TOKEN" "https://cloud.blackdevs.com.br" | jq .
 # {
 #   "message": "Health",
+#   "status": 200
+# }
+
+
+######## calling using cloudfront distribution domain
+curl --silent -H "Authorization: Token $API_SECRET_TOKEN" "https://$(terraform output cloudfront_domain_name)" | jq .
+# index
+# {
+#   "message": "OK",
+#   "status": 200
+# }
+
+
+######## calling using custom domain
+curl --silent -H "Authorization: Token $API_SECRET_TOKEN" "https://$(terraform output api_fqdn)" | jq .
+# index
+# {
+#   "message": "OK",
 #   "status": 200
 # }
 
@@ -93,5 +121,3 @@ cat response.json
 
 # echo "$(sha256sum app.zip | cut -d ' ' -f 1)" | base64
 # ZTZhYTE4NTU1OWQ5ZmIyNDNmYjE0OWQxODMwNDMxNDM5NWMwNzdlMWJlMDM2NDY1MjhlNGM0NjU0ZjdkMDc4Ygo=
-
-API_SECRET_TOKEN="$(uuidgen | sed 's/-//g')" python main.py

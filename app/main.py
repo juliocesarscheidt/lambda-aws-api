@@ -12,6 +12,9 @@ auth = HTTPTokenAuth('Token')
 API_SECRET_TOKEN = os.getenv('API_SECRET_TOKEN')
 print(API_SECRET_TOKEN)
 
+API_STAGE = os.getenv('API_STAGE')
+print(API_STAGE)
+
 @auth.verify_token
 def verify_token(token):
   return token == API_SECRET_TOKEN

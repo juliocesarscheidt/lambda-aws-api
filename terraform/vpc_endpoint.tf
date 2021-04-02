@@ -1,3 +1,4 @@
+# this allows the Lambda Function to call S3 API Endpoints inside the AWS private network
 resource "aws_vpc_endpoint" "s3_endpoint" {
   vpc_id = aws_vpc.main-vpc.id
 

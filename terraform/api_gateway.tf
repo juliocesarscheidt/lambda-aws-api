@@ -15,6 +15,7 @@ resource "aws_api_gateway_method" "proxy-root" {
   http_method   = "GET"
   authorization = "NONE"
 
+  # it requires the Authorization header
   request_parameters = {
     "method.request.header.Authorization" = true
   }
@@ -43,6 +44,7 @@ resource "aws_api_gateway_method" "proxy" {
   http_method   = "GET"
   authorization = "NONE"
 
+  # it requires the Authorization header
   request_parameters = {
     "method.request.header.Authorization" = true
   }
@@ -60,13 +62,8 @@ resource "aws_api_gateway_integration" "lambda" {
 
 # deploy the API gateway
 resource "aws_api_gateway_deployment" "api-gateway-deployment" {
-  depends_on = [
-    aws_api_gateway_integration.lambda,
-    aws_api_gateway_integration.lambda-root,
-  ]
-
   rest_api_id = aws_api_gateway_rest_api.rest-api.id
-  stage_name  = "dev"
+  stage_name  = var.api_stage
 
   triggers = {
     redeployment = sha1(jsonencode([
@@ -75,4 +72,15 @@ resource "aws_api_gateway_deployment" "api-gateway-deployment" {
       aws_api_gateway_integration.lambda.id,
     ]))
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    aws_api_gateway_integration.lambda,
+    aws_api_gateway_integration.lambda-root,
+    aws_lambda_function.lambda-function,
+    aws_api_gateway_rest_api.rest-api
+  ]
 }

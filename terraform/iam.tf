@@ -18,6 +18,7 @@ resource "aws_iam_role" "lambda-iam-role" {
 EOF
 }
 
+# this is required to allow Lambda Function to create a ENI that could reach the S3 VPC endpoint
 resource "aws_iam_policy" "ec2-lamdbda-handler" {
   name = "ec2-lamdbda-handler"
 
