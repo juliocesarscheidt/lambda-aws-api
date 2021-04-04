@@ -1,5 +1,5 @@
 resource "aws_security_group" "lambda-function-sg" {
-  description = "security group that allows specific ports and traffic to lambda function"
+  description = "Security group which allows traffic to lambda function"
   vpc_id      = aws_vpc.main-vpc.id
   name        = "lambda-function-sg"
 
@@ -12,14 +12,8 @@ resource "aws_security_group" "lambda-function-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # inbound rules
-  # ingress {
-  #   from_port = 0
-  #   to_port   = 0
-  #   protocol  = "-1"
-
-  #   security_groups = []
-  # }
+  # there is no inbound rules
+  # ingress {}
 
   lifecycle {
     create_before_destroy = true

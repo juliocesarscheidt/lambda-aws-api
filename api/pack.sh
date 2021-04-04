@@ -10,14 +10,17 @@ fi
 cd ./package
 
 # creates a .zip on the previous folder
-zip -r ../app.zip .
+zip -r ../api.zip .
 cd ../
 
-# add the main.py file in the .zip
-zip -g app.zip main.py
+# give permissions to be read by group and others, besides of full permission to owner
+chmod 755 main.py modules/ modules/*.py
+
+# add the *.py file in the .zip
+zip -g api.zip main.py modules/*.py
 
 # give permissions to be read by group and others, besides of full permission to owner
-chmod 755 app.zip
+chmod 755 api.zip
 
 # moves the .zip to the terraform's folder
-mv ./app.zip ../terraform/
+mv ./api.zip ../terraform/

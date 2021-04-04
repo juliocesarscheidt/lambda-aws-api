@@ -27,7 +27,6 @@ resource "aws_iam_policy" "ec2-lamdbda-handler" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "Stmt1617336135236",
       "Action": [
         "ec2:AssignPrivateIpAddresses",
         "ec2:CreateNetworkInterface",
@@ -43,7 +42,39 @@ resource "aws_iam_policy" "ec2-lamdbda-handler" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "attach-role-policy" {
+resource "aws_iam_role_policy_attachment" "attach-role-policy-ec2" {
   role       = aws_iam_role.lambda-iam-role.name
   policy_arn = aws_iam_policy.ec2-lamdbda-handler.arn
+}
+
+# this is required to allow Lambda Function to call DynamoDB by using its IAM permissions
+resource "aws_iam_policy" "dynamodb-lamdbda-handler" {
+  name = "dynamodb-lamdbda-handler"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "attach-role-policy-dynamodb" {
+  role       = aws_iam_role.lambda-iam-role.name
+  policy_arn = aws_iam_policy.dynamodb-lamdbda-handler.arn
 }

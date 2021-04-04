@@ -1,5 +1,6 @@
 data "aws_route53_zone" "root_zone" {
   name       = "${var.domain}."
+
   depends_on = [aws_cloudfront_distribution.api-gateway-distribution]
 }
 
@@ -20,7 +21,6 @@ resource "aws_route53_record" "a_record" {
   }
 
   depends_on = [
-    data.aws_route53_zone.root_zone,
     aws_cloudfront_distribution.api-gateway-distribution
   ]
 }

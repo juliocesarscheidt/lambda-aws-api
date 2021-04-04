@@ -1,8 +1,8 @@
 resource "aws_lambda_function" "lambda-function" {
   function_name = "lambda-function"
 
-  filename         = "app.zip"
-  source_code_hash = filebase64sha256("app.zip")
+  filename         = var.api_filename
+  source_code_hash = filebase64sha256(var.api_filename)
 
   handler = "main.handler"
   runtime = "python3.6"
@@ -23,6 +23,8 @@ resource "aws_lambda_function" "lambda-function" {
   }
 
   depends_on = [
+    aws_dynamodb_table.dynamodb-table-users,
+    aws_subnet.main-subnets,
     aws_security_group.lambda-function-sg
   ]
 }

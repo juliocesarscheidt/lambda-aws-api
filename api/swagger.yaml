@@ -1,0 +1,181 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'Users API with Python and DynamoDB'
+  description: 'Simple users API - Specification'
+
+security:
+  - application:
+    - read
+    - write
+
+paths:
+  /user:
+    parameters:
+      - name: token
+        in: header
+        description: Authorization token in Request Header
+        required: true
+        schema:
+          type: string
+          example: >-
+            Token a80ac2ff00a5468da81693a27e0c4ebf
+
+    get:
+      tags:
+      - "User"
+      summary: Get all users
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_users'
+        500:
+          description: Internal Server Error
+
+    post:
+      tags:
+      - "User"
+      summary: Create an user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request_user_create'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_user_create'
+        500:
+          description: Internal Server Error
+
+  /user/{unique_id}:
+    parameters:
+      - name: unique_id
+        in: path
+        description: User unique ID
+        required: true
+        schema:
+          type: string
+          example: "3e03d5d1-6add-4fc5-8a4f-f603db92c589"
+
+      - name: token
+        in: header
+        description: Authorization token in Request Header
+        required: true
+        schema:
+          type: string
+          example: >-
+            Token a80ac2ff00a5468da81693a27e0c4ebf
+
+    get:
+      tags:
+      - "User"
+      summary: Get an user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_user'
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+    delete:
+      tags:
+      - "User"
+      summary: Delete an user
+      responses:
+        204:
+          description: No Content
+        500:
+          description: Internal Server Error
+
+    put:
+      tags:
+      - "User"
+      summary: Update an user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request_user_create'
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_user'
+        500:
+          description: Internal Server Error
+
+components:
+  schemas:
+    response_users:
+      type: array
+      items:
+        type: object
+        required:
+        - unique_id
+        - name
+        - email
+        properties:
+          unique_id:
+            type: string
+            example: "3e03d5d1-6add-4fc5-8a4f-f603db92c589"
+          name:
+            type: string
+            example: "user1"
+          email:
+            type: string
+            example: "user1@mail.com"
+
+    response_user:
+      type: object
+      required:
+        - unique_id
+        - name
+        - email
+      properties:
+        unique_id:
+          type: string
+          example: "3e03d5d1-6add-4fc5-8a4f-f603db92c589"
+        name:
+          type: string
+          example: "user1"
+        email:
+          type: string
+          example: "user1@mail.com"
+
+    request_user_create:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          example: "user1"
+        email:
+          type: string
+          example: "user1@mail.com"
+
+    response_user_create:
+      type: object
+      required:
+        - unique_id
+      properties:
+        unique_id:
+          type: string
+          example: "3e03d5d1-6add-4fc5-8a4f-f603db92c589"

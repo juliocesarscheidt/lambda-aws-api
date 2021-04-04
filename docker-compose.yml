@@ -1,0 +1,41 @@
+version: "3.4"
+
+services:
+  lambda-api:
+    container_name: lambda-api
+    build:
+      context: ./api
+    environment:
+      API_SECRET_TOKEN: a80ac2ff00a5468da81693a27e0c4ebf
+      API_STAGE: development
+      AWS_ACCESS_KEY_ID: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY
+      AWS_DEFAULT_REGION: sa-east-1
+      DYNAMODB_ENDPOINT_URL: http://dynamo-db:8000
+    volumes:
+      - ./api:/usr/src/app
+    ports:
+      - "5050:5050"
+    networks:
+      - subnet_0
+    restart: on-failure
+
+  dynamo-db:
+    container_name: dynamo-db
+    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
+    image: "amazon/dynamodb-local:latest"
+    working_dir: /home/dynamodblocal
+    volumes:
+      - dynamodb-storage:/home/dynamodblocal/data
+    ports:
+      - "8000:8000"
+    networks:
+      - subnet_0
+    restart: on-failure
+
+networks:
+  subnet_0:
+    driver: bridge
+
+volumes:
+  dynamodb-storage:

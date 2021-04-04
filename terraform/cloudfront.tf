@@ -28,10 +28,10 @@ resource "aws_cloudfront_distribution" "api-gateway-distribution" {
 
     target_origin_id = local.cloudfront_origin_id
 
-    allowed_methods = ["GET", "HEAD"]
+    allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods  = ["GET", "HEAD"]
 
-    # auth-header Cache Policy
+    # auth-header-cache-policy Cache Policy
     cache_policy_id = aws_cloudfront_cache_policy.auth-header-cache-policy.id
   }
 
@@ -63,13 +63,14 @@ resource "aws_cloudfront_distribution" "api-gateway-distribution" {
 }
 
 resource "aws_cloudfront_cache_policy" "auth-header-cache-policy" {
-  name = "auth-header-cache-policy"
-
-  min_ttl     = 1
-  max_ttl     = 31536000
-  default_ttl = 86400
+  name        = "auth-header-cache-policy"
+  default_ttl = 0
+  min_ttl     = 0
+  max_ttl     = 1 # 1 minutes
 
   parameters_in_cache_key_and_forwarded_to_origin {
+    enable_accept_encoding_gzip = true
+
     # this will allow the Distribution to forward
     # Authorization header to API Gateway, once it is used there
     headers_config {
@@ -79,12 +80,12 @@ resource "aws_cloudfront_cache_policy" "auth-header-cache-policy" {
       }
     }
 
-    cookies_config {
-      cookie_behavior = "none"
+    query_strings_config {
+      query_string_behavior = "all"
     }
 
-    query_strings_config {
-      query_string_behavior = "none"
+    cookies_config {
+      cookie_behavior = "all"
     }
   }
 }

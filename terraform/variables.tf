@@ -31,13 +31,19 @@ variable "certificate_arn" {
   description = "The ARN of the certificate to be used for Cloudfront Distribution"
 }
 
-variable "api_stage" {
-  type        = string
-  description = "The stage for deployment"
-  default     = "development"
-}
-
 variable "api_secret_token" {
   type        = string
   description = "The API secret token"
+}
+
+variable "api_stage" {
+  type        = string
+  description = "The stage for deployment"
+  default     = "production"
+}
+
+variable "api_filename" {
+  type        = string
+  description = "The API .zip filename"
+  default     = "api.zip"
 }
