@@ -1,8 +1,6 @@
 #!/bin/bash
 
-#### deploy
-
-# generate a API token
+# generate some random API token
 export API_SECRET_TOKEN="$(uuidgen | sed 's/-//g')"
 echo "$API_SECRET_TOKEN"
 # e.g. a80ac2ff00a5468da81693a27e0c4ebf
@@ -16,15 +14,10 @@ terraform init
 terraform validate
 terraform plan -detailed-exitcode -input=false
 terraform apply -auto-approve
-# terraform destroy -auto-approve
+terraform destroy -auto-approve
 
 
 ######## calling API using API gateway's invoke URL
-terraform output api_gateway_invoke_url
-curl "$(terraform output api_gateway_invoke_url)"
-# Unauthorized Access
-
-
 curl --silent -H "Authorization: Token $API_SECRET_TOKEN" "$(terraform output api_gateway_invoke_url)/health"
 # health
 # {"data":"Health"}
