@@ -21,9 +21,9 @@ variable "aws_az_names" {
   default     = ["sa-east-1a", "sa-east-1b", "sa-east-1c"]
 }
 
-variable "domain" {
+variable "root_domain" {
   type        = string
-  description = "The domain to be used for Cloudfront Distribution"
+  description = "The root domain on AWS"
 }
 
 variable "certificate_arn" {

@@ -1,5 +1,5 @@
 data "aws_route53_zone" "root_zone" {
-  name       = "${var.domain}."
+  name = "${var.root_domain}."
 
   depends_on = [aws_cloudfront_distribution.api-gateway-distribution]
 }
