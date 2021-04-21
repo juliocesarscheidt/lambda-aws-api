@@ -64,6 +64,7 @@ resource "aws_cloudfront_distribution" "api-gateway-distribution" {
 
 resource "aws_cloudfront_cache_policy" "auth-header-cache-policy" {
   name        = "auth-header-cache-policy"
+  # no cache
   default_ttl = 0
   min_ttl     = 0
   max_ttl     = 1 # 1 minutes

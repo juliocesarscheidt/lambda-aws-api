@@ -42,8 +42,8 @@ variable "api_stage" {
   default     = "production"
 }
 
-variable "api_filename" {
+variable "api_file_path" {
   type        = string
-  description = "The API .zip filename"
+  description = "The API file path"
   default     = "api.zip"
 }

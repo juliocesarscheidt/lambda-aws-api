@@ -1,5 +1,5 @@
 .terraform/
 *.tfstate*
 *.tfvars
-*.zip
 *.log
+*.zip

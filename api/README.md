@@ -4,7 +4,7 @@
 
 > This is a simple users API with some CRUD, using DynamoDB
 
-Take a look at the [Swagger](./swagger.yaml) for the specifications
+Take a look at the [Swagger File](./swagger.yaml) for the specifications
 
 ## Testing the API
 

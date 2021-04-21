@@ -1,8 +1,8 @@
 resource "aws_lambda_function" "lambda-function" {
   function_name = "lambda-function"
 
-  filename         = var.api_filename
-  source_code_hash = filebase64sha256(var.api_filename)
+  filename         = var.api_file_path
+  source_code_hash = filebase64sha256(var.api_file_path)
 
   handler = "main.handler"
   runtime = "python3.6"
