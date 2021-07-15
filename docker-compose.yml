@@ -6,12 +6,12 @@ services:
     build:
       context: ./api
     environment:
-      API_SECRET_TOKEN: a80ac2ff00a5468da81693a27e0c4ebf
       API_STAGE: development
-      AWS_ACCESS_KEY_ID: AWS_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY
-      AWS_DEFAULT_REGION: sa-east-1
-      DYNAMODB_ENDPOINT_URL: http://dynamo-db:8000
+      API_SECRET_TOKEN: ${API_SECRET_TOKEN}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-sa-east-1}
+      DYNAMODB_ENDPOINT_URL: ${DYNAMODB_ENDPOINT_URL:-http://dynamo-db:8000}
     volumes:
       - ./api:/usr/src/app
     ports:
