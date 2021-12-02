@@ -21,7 +21,7 @@ export TF_VAR_aws_access_key="AWS_ACCESS_KEY_ID"
 export TF_VAR_aws_secret_key="AWS_SECRET_ACCESS_KEY"
 export TF_VAR_root_domain="domain.com.br"
 export TF_VAR_certificate_arn="arn:aws:acm:region:account:certificate/uuid"
-export TF_VAR_api_secret_token="SOME_API_SECRET"
+export TF_VAR_api_secret_token="API_SECRET"
 ```
 
 After that is possible to deploy by running:

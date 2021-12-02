@@ -27,8 +27,8 @@ app.config["DEBUG"] = is_development
 # on production we will use the credentials from the Lambda's IAM role itself
 if is_development:
   dynamodb_client = boto3.client('dynamodb',
-    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID', 'invalid'),
-    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY', 'invalid'),
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
     region_name=os.environ.get('AWS_DEFAULT_REGION', 'sa-east-1'),
     endpoint_url=os.environ.get('DYNAMODB_ENDPOINT_URL', 'http://dynamo-db:8000'),
   )
